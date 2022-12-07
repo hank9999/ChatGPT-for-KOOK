@@ -1,0 +1,10 @@
+{
+  "kook": {
+    "token": ""
+  },
+  "openai": {
+    "email": "",
+    "password": "",
+    "proxy": ""
+  }
+}
