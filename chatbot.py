@@ -2,7 +2,7 @@ import datetime
 
 import config
 import logging
-from revChatGPT.revChatGPT import Chatbot
+from asyncChatGPT.asyncChatGPT import Chatbot
 
 
 class ChatSession:
@@ -24,5 +24,5 @@ def find_or_create_chatbot(bot_id: str):
         bot.reset_chat()
         bot.refresh_session()
         bots[bot_id] = bot
-        logging.info(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", f"Generating ok for id {bot_id}")
+        print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", f"Generating ok for id {bot_id}")
         return bot

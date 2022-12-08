@@ -51,7 +51,7 @@ def init():
               f'问题: {content}, 等待 API 响应...')
         cbot = chatbot.find_or_create_chatbot(msg.author_id)
         try:
-            resp = cbot.get_chat_response(content, output="text")
+            resp = await cbot.get_chat_response(content, output="text")
             print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
                   f'用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, '
                   f'问题: {content}, 回答: {resp}')
