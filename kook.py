@@ -1,7 +1,7 @@
 import datetime
 from typing import List
 
-from khl import Bot, Message
+from khl import Bot, Message, api
 from khl.command import Lexer, Exceptions
 
 import chatbot
@@ -51,7 +51,15 @@ def init():
               f'问题: {content}, 等待 API 响应...')
         cbot = chatbot.find_or_create_chatbot(msg.author_id)
         try:
-            resp = await cbot.get_chat_response(content, output="text")
+            message_id = (await msg.reply(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 等待 API 响应..."))['msg_id']
+            resp = ''
+            chars = 0
+            async for i in await cbot.get_chat_response(content, output="stream"):
+                resp = i['message']
+                if len(resp) - chars >= 5:
+                    await msg.gate.exec_req(api.Message.update(message_id, resp))
+                    chars = len(resp)
+            await msg.gate.exec_req(api.Message.update(message_id, resp))
             print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
                   f'用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, '
                   f'问题: {content}, 回答: {resp}')
