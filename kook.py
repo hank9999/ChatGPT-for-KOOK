@@ -52,18 +52,22 @@ def init():
         cbot = chatbot.find_or_create_chatbot(msg.author_id)
         try:
             message_id = (await msg.reply(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 等待 API 响应..."))['msg_id']
-            resp = ''
+            resp: str = ''
             chars = 0
             async for i in await cbot.get_chat_response(content, output="stream"):
                 resp = i['message']
-                if len(resp) - chars >= 5:
-                    await msg.gate.exec_req(api.Message.update(message_id, resp))
+                if len(resp) - chars >= 10:
+                    if len(resp.strip()) != 0:
+                        await msg.gate.exec_req(api.Message.update(message_id, resp))
                     chars = len(resp)
-            await msg.gate.exec_req(api.Message.update(message_id, resp))
+
+            if len(resp.strip()) != 0:
+                await msg.gate.exec_req(api.Message.update(message_id, resp))
+            else:
+                await msg.gate.exec_req(api.Message.update(message_id, 'API 相应为空'))
             print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
                   f'用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, '
                   f'问题: {content}, 回答: {resp}')
-            await msg.reply(resp["message"])
         except Exception as e:
             print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
                   f'用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, '
