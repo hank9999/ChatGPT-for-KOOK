@@ -78,7 +78,7 @@ def init():
 
     @bot.command(lexer=KeyWord(keyword='/reset', start_with=True))
     async def reset(msg: Message):
-        cbot = chatbot.find_or_create_chatbot(msg.author_id)
+        cbot = chatbot.find_or_create_chatbot(msg.ctx.guild.id)
         print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
               f"用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, 重置会话")
         cbot.reset_chat()
