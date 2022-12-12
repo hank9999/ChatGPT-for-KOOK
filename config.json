@@ -3,8 +3,9 @@
     "token": ""
   },
   "openai": {
-    "email": "",
-    "password": "",
+    "session_token": "",
+    "cf_clearance": "",
+    "user_agent": "",
     "proxy": ""
   }
 }

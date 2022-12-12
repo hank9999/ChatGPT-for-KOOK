@@ -20,7 +20,7 @@ def find_or_create_chatbot(bot_id: str):
         return bots[bot_id]
     else:
         print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", f"Generating new chatbot session for id {bot_id}")
-        bot = Chatbot({'email': config.openai_email, 'password': config.openai_password, 'proxy': config.openai_proxy}, conversation_id=None)
+        bot = Chatbot(config.openai, conversation_id=None)
         bot.reset_chat()
         bot.refresh_session()
         bots[bot_id] = bot
