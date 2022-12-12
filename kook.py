@@ -49,7 +49,7 @@ def init():
         print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]",
               f'用户: {msg.author.nickname}#{msg.author_id}, 服务器: {msg.ctx.guild.name}#{msg.ctx.guild.id}, '
               f'问题: {content}, 等待 API 响应...')
-        cbot = chatbot.find_or_create_chatbot(msg.author_id)
+        cbot = chatbot.find_or_create_chatbot(msg.ctx.guild.id)
         try:
             message_id = (await msg.reply(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 等待 API 响应..."))['msg_id']
             resp: str = ''
