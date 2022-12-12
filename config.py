@@ -18,8 +18,8 @@ def load():
         if len(conf['kook']['token']) == 0:
             logging.error("缺少 KOOK 的 Token")
             sys.exit()
-        if len(conf['openai']['session_token']) == 0 or len(conf['openai']['cf_clearance']) == 0:
-            logging.error("OpenAI session_token 或 cf_clearance 为空")
+        if len(conf['openai']['session_token']) == 0:
+            logging.error("OpenAI session_token 为空")
             sys.exit()
 
         kook_token = conf['kook']['token']
