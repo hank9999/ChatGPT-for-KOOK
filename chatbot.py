@@ -1,8 +1,7 @@
 import datetime
 
 import config
-import logging
-from asyncChatGPT.asyncChatGPT import Chatbot
+from revChatGPT.revChatGPT import AsyncChatbot
 
 
 class ChatSession:
@@ -20,7 +19,7 @@ def find_or_create_chatbot(bot_id: str):
         return bots[bot_id]
     else:
         print(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", f"Generating new chatbot session for id {bot_id}")
-        bot = Chatbot(config.openai, conversation_id=None)
+        bot = AsyncChatbot(config.openai, conversation_id=None)
         bot.reset_chat()
         bot.refresh_session()
         bots[bot_id] = bot
